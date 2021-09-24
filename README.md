@@ -21,9 +21,9 @@ yarn install react-stl-viewer
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {GCodeViewer} from "react-gcode-viewer";
+import {StlViewer} from "react-stl-viewer";
 
-const url = "https://storage.googleapis.com/ucloud-v3/6127a7f9aa32f718b8c1ab4f.gcode"
+const url = "https://storage.googleapis.com/ucloud-v3/ccab50f18fb14c91ccca300a.stl"
 
 const style = {
     top: 0,
@@ -34,7 +34,7 @@ const style = {
 
 function App() {
     return (
-        <GCodeViewer
+        <StlViewer
             style={style}
             url={url}
         />
@@ -49,14 +49,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
 | ----------------------     | :------------------------: | :----------: | :----------------------------------------------------------:                                                                                                                                |
 | `url`                      | `string`                   | `?true`      | url of the GCode file, required if no "file" parameter is specified |
-| `file`                     | `string or File`           | `?true`      | string or File object, required if no "url" parameter is specified |
-| `quality`                  | `number`                   | `false`      | (default 1) number between 0 and 1 specifying the render quality, for larger models it's recommended to lower this number, as it consumes a lot of resources |
-| `visible`                  | `number`                   | `false`      | (default 1) number between 0 and 1 specifying the percentage of visible layers |
-| `layerColor`               | `string`                   | `false`      | (default "grey") layer color |
-| `topLayerColor`            | `string`                   | `false`      | (default "hotpink") top layer color |
-| `reqOptions`               | `RequestInit`              | `false`      | fetch options for customizing the http query made for retrieving the GCode file, only valid if "url" is specified |
-| `onProgress`               | `(p: GCodeParseProgress) => any` | `false`| callback triggered on parsing progress |
-| `onFinishLoading`          | `(p: GCodeParseProgress) => any` | `false`| callback triggered when GCode is fully loaded |
-| `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading GCode|
 
 The component also accepts ```<div/>``` props
