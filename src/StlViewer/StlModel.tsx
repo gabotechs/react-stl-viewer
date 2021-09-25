@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useState } from "react"
+import React, { CSSProperties, useEffect, useRef, useState } from "react"
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
@@ -14,6 +14,7 @@ export interface StlModelProps {
     url: string
     color?: CSSProperties["color"]
     extraHeaders?: Record<string, string>
+    onFinishLoading?: () => void
 }
 
 const StlModel: React.FC<StlModelProps> = (
@@ -21,6 +22,7 @@ const StlModel: React.FC<StlModelProps> = (
         url,
         color = "grey",
         extraHeaders,
+        onFinishLoading,
     }
 ) => {
     const {camera} = useThree()
@@ -34,6 +36,10 @@ const StlModel: React.FC<StlModelProps> = (
         ((loader) => loader.setRequestHeader(extraHeaders))
     )
 
+    useEffect(() => {
+        setPosition(null)
+    }, [geometry])
+
     useFrame(() => {
         if (position || !geometry.boundingSphere) {
             return
@@ -42,7 +48,10 @@ const StlModel: React.FC<StlModelProps> = (
         const f = radius/POSITION_FACTOR
         camera.position.set(-CAMERA_OFFSET*f, CAMERA_OFFSET*f, 0)
         controls.current?.update()
-        setTimeout(() => setPosition([-x, -y, -z]), REPOSITION_TIMEOUT)
+        setTimeout(() => {
+            setPosition([-x, -y, -z])
+            onFinishLoading && onFinishLoading()
+        }, REPOSITION_TIMEOUT)
     })
 
     const rotation = DEFAULT_ROTATION.map(n => n*Math.PI/180) as [number, number, number]

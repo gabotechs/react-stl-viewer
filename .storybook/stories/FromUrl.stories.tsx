@@ -28,5 +28,5 @@ export const Primary = FromUrl.bind({})
 
 export default {
     component: StlViewer,
-    title: "GCodeViewer from url",
+    title: "StlViewer from url",
 } as ComponentMeta<FC<StlViewerProps>>
