@@ -19,7 +19,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 backgroundColor: "white"
             }}
             color={'#00B89F'}
-            {...props}
+            onFinishLoading={console.log}
         />
     );
 }

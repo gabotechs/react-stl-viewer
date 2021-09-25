@@ -52,6 +52,6 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | `file`                     | `string or File`           | `?true`      | string or File object, required if no "url" parameter is specified |
 | `color`                    | `string`                   | `false`      | (default "grey") model color |
 | `extraHeaders`             | `Record<string, string>`   | `false`      | custom headers for making the http query |
-| `onFinishLoading`          | `() => any`                | `false`      | callback triggered when GCode is fully loaded |
+| `onFinishLoading`          | `(ev: LoadingFinishedEvent) => any`| `false`| callback triggered when GCode is fully loaded |
 | `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading GCode|
 The component also accepts ```<div/>``` props
