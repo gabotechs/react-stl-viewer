@@ -8,7 +8,8 @@ export interface StlViewerProps extends
     Omit<StlModelProps, "url"> {
     url?: string
     file?: File
-    onError?(err: Error): void
+    onError?(err: Error): void,
+    canvasId?: string
 }
 
 const StlViewer: React.FC<StlViewerProps> = (
@@ -20,6 +21,7 @@ const StlViewer: React.FC<StlViewerProps> = (
         onError,
         extraHeaders,
         onFinishLoading,
+        canvasId,
         ...otherProps
     }
 ) => {
@@ -41,7 +43,7 @@ const StlViewer: React.FC<StlViewerProps> = (
         <div {...otherProps}>
             <ErrorBoundary onError={onError}>
                 <React.Suspense fallback={null}>
-                    <Canvas style={{width: '100%', height: '100%'}}>
+                    <Canvas id={canvasId} style={{width: '100%', height: '100%'}}>
                         <StlModel {...modelProps}/>
                     </Canvas>
                 </React.Suspense>
