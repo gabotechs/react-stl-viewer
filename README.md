@@ -1,6 +1,6 @@
-# react-gcode-viewer
+# react-stl-viewer
 
-React component for visualizing GCodes using Three.js.
+React component for visualizing STLs using Three.js.
 
 <p align="center">
     <img src="docs/demo.gif">
@@ -48,10 +48,10 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 | Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
 | ----------------------     | :------------------------: | :----------: | :----------------------------------------------------------:                                                                                                                                |
-| `url`                      | `string`                   | `?true`      | url of the GCode file, required if no "file" parameter is specified |
+| `url`                      | `string`                   | `?true`      | url of the Stl file, required if no "file" parameter is specified |
 | `file`                     | `string or File`           | `?true`      | string or File object, required if no "url" parameter is specified |
 | `color`                    | `string`                   | `false`      | (default "grey") model color |
 | `extraHeaders`             | `Record<string, string>`   | `false`      | custom headers for making the http query |
-| `onFinishLoading`          | `(ev: LoadingFinishedEvent) => any`| `false`| callback triggered when GCode is fully loaded |
-| `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading GCode|
+| `onFinishLoading`          | `(ev: LoadingFinishedEvent) => any`| `false`| callback triggered when Stl is fully loaded |
+| `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading Stl|
 The component also accepts ```<div/>``` props
