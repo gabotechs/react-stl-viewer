@@ -49,5 +49,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
 | ----------------------     | :------------------------: | :----------: | :----------------------------------------------------------:                                                                                                                                |
 | `url`                      | `string`                   | `?true`      | url of the GCode file, required if no "file" parameter is specified |
-
+| `file`                     | `string or File`           | `?true`      | string or File object, required if no "url" parameter is specified |
+| `color`                    | `string`                   | `false`      | (default "grey") model color |
+| `extraHeaders`             | `Record<string, string>`   | `false`      | custom headers for making the http query |
+| `onFinishLoading`          | `() => any`                | `false`      | callback triggered when GCode is fully loaded |
+| `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading GCode|
 The component also accepts ```<div/>``` props
