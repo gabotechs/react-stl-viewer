@@ -43,7 +43,11 @@ const StlViewer: React.FC<StlViewerProps> = (
         <div {...otherProps}>
             <ErrorBoundary onError={onError}>
                 <React.Suspense fallback={null}>
-                    <Canvas id={canvasId} style={{width: '100%', height: '100%'}}>
+                    <Canvas
+                        gl={{preserveDrawingBuffer: true}}
+                        id={canvasId}
+                        style={{width: '100%', height: '100%'}}
+                    >
                         <StlModel {...modelProps}/>
                     </Canvas>
                 </React.Suspense>
