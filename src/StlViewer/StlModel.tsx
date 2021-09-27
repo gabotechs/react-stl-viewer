@@ -1,13 +1,12 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react"
-import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { Mesh, Box3 } from "three";
+import { Mesh, Box3, Group } from "three";
 
-const CAMERA_OFFSET = 250
+const CAMERA_OFFSET = 220
 const POSITION_FACTOR = 120
-const LIGHT_DISTANCE = 200
-const REPOSITION_TIMEOUT = 100
+const LIGHT_DISTANCE = 300
 const DEFAULT_ROTATION= [-90, 10, -45]
 
 export interface LoadingFinishedEvent {
@@ -31,22 +30,18 @@ const StlModel: React.FC<StlModelProps> = (
         onFinishLoading,
     }
 ) => {
-    const positionTimeout = useRef(null as null | NodeJS.Timeout)
-    const {camera} = useThree()
-    const controls = useRef<any>()
+    const group = useRef<Group>()
     const mesh = useRef<Mesh>()
     const [loading, setLoading] = useState(false)
-    const [position, setPosition] = useState<[number, number, number] | null>(null)
+
+    const [position, setPosition] = useState<[number, number, number]>([0, 0, 0])
+    const [cameraPos, setCameraPos] = useState<[number, number, number]>([0, 0, 0])
 
     const geometry = useLoader(
         STLLoader,
         url,
         ((loader) => loader.setRequestHeader(extraHeaders))
     )
-
-    useEffect(() => {
-        return () => positionTimeout.current && clearTimeout(positionTimeout.current)
-    }, [])
 
     useEffect(() => {
         setLoading(true)
@@ -67,32 +62,36 @@ const StlModel: React.FC<StlModelProps> = (
 
         const {center: {x, y, z}, radius} = geometry.boundingSphere
         const f = radius/POSITION_FACTOR
-        camera.position.set(-CAMERA_OFFSET*f, CAMERA_OFFSET*f, 0)
-        controls.current?.update()
+        setCameraPos([-CAMERA_OFFSET*f, CAMERA_OFFSET*f, 0])
+        setPosition([-x, -y, -z])
+        onFinishLoading && onFinishLoading(finish)
         setLoading(false)
-        if (positionTimeout.current) return
-        positionTimeout.current = setTimeout(() => {
-            setPosition([-x, -y, -z])
-            onFinishLoading && onFinishLoading(finish)
-            positionTimeout.current = null
-        }, REPOSITION_TIMEOUT)
     })
 
     const rotation = DEFAULT_ROTATION.map(n => n*Math.PI/180) as [number, number, number]
 
     return (
         <>
-            <PerspectiveCamera makeDefault near={1} far={1000}/>
-            <OrbitControls ref={controls}/>
-            <group rotation={rotation} >
-                <mesh ref={mesh} position={position || [0, 0, 0]}>
+            <PerspectiveCamera
+                makeDefault
+                position={cameraPos}
+                near={1}
+                far={1000}
+                {...{} as any}
+            />
+            <OrbitControls />
+            <group ref={group} rotation={rotation}>
+                <mesh ref={mesh} position={position}>
                     <primitive object={geometry} attach={"geometry"} />
-                    <meshStandardMaterial color={color} opacity={position? 1:0}/>
+                    <meshStandardMaterial
+                        color={color}
+                        opacity={position? 1:0}
+                    />
                 </mesh>
             </group>
             <ambientLight/>
-            <pointLight position={[LIGHT_DISTANCE, LIGHT_DISTANCE, LIGHT_DISTANCE]}/>
-            <pointLight position={[-LIGHT_DISTANCE, -LIGHT_DISTANCE, -LIGHT_DISTANCE]}/>
+            <pointLight position={[-LIGHT_DISTANCE, LIGHT_DISTANCE, LIGHT_DISTANCE]}/>
+            <pointLight position={[LIGHT_DISTANCE, -LIGHT_DISTANCE, -LIGHT_DISTANCE]}/>
         </>
     )
 }
