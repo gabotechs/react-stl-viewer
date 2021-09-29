@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useRef, useState } from "react"
 import { useFrame, useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { Box3, Color, Group, Mesh } from "three";
+import { Box3, Color, DoubleSide, Group, Mesh } from "three";
 
 const CAMERA_OFFSET = 220
 const POSITION_FACTOR = 120
@@ -88,15 +88,16 @@ const StlModel: React.FC<StlModelProps> = (
                 <mesh ref={mesh} position={position} castShadow>
                     <primitive object={geometry} attach={"geometry"} />
                     <meshStandardMaterial
+                        side={DoubleSide}
                         color={color}
                         opacity={loading ? 0:1}
                     />
                 </mesh>
             </group>
             <group rotation={[-Math.PI/2, 0, 0]} >
-                <mesh position={[0, 0, -floorOffset]} receiveShadow >
+                <mesh position={[0, 0, -floorOffset]} receiveShadow  >
                     <planeGeometry args={[BIG_NUM, BIG_NUM]} />
-                    <shadowMaterial opacity={shadows ? .2:0}/>
+                    <shadowMaterial opacity={shadows ? .2:0} />
                 </mesh>
             </group>
             <OrbitControls/>
