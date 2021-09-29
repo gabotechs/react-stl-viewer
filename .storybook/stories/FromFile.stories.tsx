@@ -34,7 +34,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
             {file && <StlViewer
                 file={file}
                 style={style}
-
+                shadows
                 color={'#00B89F'}
                 {...extraProps}
                 {...props}

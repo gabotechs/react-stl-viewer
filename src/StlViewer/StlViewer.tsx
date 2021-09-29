@@ -2,6 +2,7 @@ import React, { HTMLProps, useMemo } from "react"
 import { Canvas } from "@react-three/fiber";
 import StlModel, { StlModelProps } from "./StlModel";
 import ErrorBoundary from "./ErrorBoundary";
+import { PCFSoftShadowMap } from "three";
 
 export interface StlViewerProps extends
     Omit<HTMLProps<HTMLDivElement>, "color" | "onError">,
@@ -22,6 +23,7 @@ const StlViewer: React.FC<StlViewerProps> = (
         extraHeaders,
         onFinishLoading,
         canvasId,
+        shadows,
         ...otherProps
     }
 ) => {
@@ -36,7 +38,8 @@ const StlViewer: React.FC<StlViewerProps> = (
         url,
         color,
         extraHeaders,
-        onFinishLoading
+        onFinishLoading,
+        shadows
     }
 
     return (
@@ -44,7 +47,8 @@ const StlViewer: React.FC<StlViewerProps> = (
             <ErrorBoundary onError={onError}>
                 <React.Suspense fallback={null}>
                     <Canvas
-                        gl={{preserveDrawingBuffer: true}}
+                        shadows
+                        gl={{preserveDrawingBuffer: true, shadowMapType: PCFSoftShadowMap, antialias: true}}
                         id={canvasId}
                         style={{width: '100%', height: '100%'}}
                     >

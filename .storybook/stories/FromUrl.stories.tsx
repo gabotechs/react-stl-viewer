@@ -18,6 +18,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 height: '100vh',
                 backgroundColor: "white"
             }}
+            shadows
             color={'#00B89F'}
             onFinishLoading={console.log}
         />

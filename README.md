@@ -51,7 +51,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | `url`                      | `string`                   | `?true`      | url of the Stl file, required if no "file" parameter is specified |
 | `file`                     | `string or File`           | `?true`      | string or File object, required if no "url" parameter is specified |
 | `color`                    | `string`                   | `false`      | (default "grey") model color |
+| `shadows`                  | `boolean`                  | `false`      | render shadows projected by the model on the ground |
 | `extraHeaders`             | `Record<string, string>`   | `false`      | custom headers for making the http query |
 | `onFinishLoading`          | `(ev: LoadingFinishedEvent) => any`| `false`| callback triggered when Stl is fully loaded |
 | `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading Stl|
+| `canvasId`                 | `string`                   | `false`      | id of the canvas element used for rendering the model |
 The component also accepts ```<div/>``` props
