@@ -3,7 +3,7 @@ import { StlViewer, StlViewerProps } from "../../src";
 import { ComponentMeta } from "@storybook/react";
 import React from "react";
 
-const url = "https://storage.googleapis.com/ucloud-v3/ccab50f18fb14c91ccca300a.stl"
+const url = "https://storage.googleapis.com/ucloud-v3/61575ca49d8a1777fa431395.stl"
 const url2 = "https://storage.googleapis.com/ucloud-v3/2272dfa00d58a59dae26a399.stl"
 
 function FromUrl(props: Omit<StlViewerProps, "url">) {
@@ -19,7 +19,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 backgroundColor: "white"
             }}
             shadows
-            color={'#00B89F'}
+            color={"#008675"}
             onFinishLoading={console.log}
         />
     );
