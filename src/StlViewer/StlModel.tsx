@@ -65,6 +65,7 @@ const StlModel: React.FC<StlModelProps> = (
             length: max.y - min.y,
             height: max.z - min.z
         }
+        geometry.computeVertexNormals()
         setFloorOffset(finish.height/2+FLOOR_DISTANCE)
         const {center: {x, y, z}, radius} = geometry.boundingSphere
         const f = radius/POSITION_FACTOR
