@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
 import { StlViewer, StlViewerProps } from "../../src";
 import { ComponentMeta } from "@storybook/react";
 import { ModelRef } from "../../src/StlViewer/SceneSetup";
@@ -18,11 +18,15 @@ const url2 = "https://storage.googleapis.com/ucloud-v3/2272dfa00d58a59dae26a399.
 
 function FromUrl(props: Omit<StlViewerProps, "url">) {
     const ref = useRef<ModelRef>()
+    const [rotationX, setRotationX] = useState(0)
+    const [rotationY, setRotationY] = useState(0)
+    const [rotationZ, setRotationZ] = useState(0)
+
 
     return (
         <>
             <StlViewer
-                url={url}
+                url={url2}
                 style={{
                     position: "absolute",
                     top: '0vh',
@@ -35,15 +39,17 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 showAxis
                 orbitControls
                 modelProps={{
-                    positionX: 0,
-                    positionY: 0,
+                    positionX: 150,
+                    positionY: 150,
+                    rotationX,
+                    rotationY,
+                    rotationZ,
                     scale: 1,
-                    rotationX: Math.PI/2,
                     color: "#008675",
                     ref
                 }}
                 floorProps={{
-                    gridWidth: 200
+                    gridWidth: 300
                 }}
                 onFinishLoading={console.log}
                 {...props}
@@ -62,6 +68,23 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
             }}>
                 download
             </button>
+            {[
+                ["rotate x", setRotationX] as const,
+                ["rotate y", setRotationY] as const,
+                ["rotate z", setRotationZ] as const
+            ].map(([text, setRotation], index) => (
+                <button
+                    key={index}
+                    style={{
+                        position: "absolute",
+                        top: 50+30*index,
+                        left: 100,
+                    }}
+                    onClick={() => setRotation(prev => prev + 15/180*Math.PI)}
+                >
+                    {text}
+                </button>
+            ))}
         </>
 
     );

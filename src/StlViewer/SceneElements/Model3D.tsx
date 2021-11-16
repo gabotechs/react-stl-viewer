@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Box3, BufferGeometry, DoubleSide, Group, Matrix4, Mesh } from "three";
-import { GroupProps, MeshStandardMaterialProps, useFrame } from "@react-three/fiber";
+import { GroupProps, MeshProps, MeshStandardMaterialProps, useFrame } from "@react-three/fiber";
 
 export interface Point3D {
     x: number
@@ -19,6 +19,7 @@ export interface Model3DProps extends Omit<GroupProps, "scale"> {
     scale?: number
     visible?: boolean
     geometry: BufferGeometry
+    meshProps: MeshProps
     materialProps: MeshStandardMaterialProps
     onLoaded(dims: ModelDimensions, mesh: Mesh, group: Group): any
 }
@@ -28,6 +29,7 @@ const Model3D: React.FC<Model3DProps> = (
         scale = 1,
         visible,
         geometry,
+        meshProps,
         materialProps: {
             opacity = 1,
             ...otherMaterialProps
@@ -75,6 +77,7 @@ const Model3D: React.FC<Model3DProps> = (
                 ref={mesh}
                 scale={[scale, scale, scale]}
                 castShadow
+                {...meshProps}
             >
                 <primitive object={geometry} attach={"geometry"} />
                 <meshStandardMaterial

@@ -44,7 +44,7 @@ const StlViewer: React.FC<StlViewerProps> = (
                 <React.Suspense fallback={null}>
                     <Canvas
                         shadows
-                        gl={{preserveDrawingBuffer: true, shadowMapType: PCFSoftShadowMap, antialias: true}}
+                        gl={{preserveDrawingBuffer: true, shadowMap: {type: PCFSoftShadowMap} as any, antialias: true}}
                         id={canvasId}
                         style={{width: '100%', height: '100%'}}
                     >

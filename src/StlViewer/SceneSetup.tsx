@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useState } from "react"
-import { useLoader, useThree } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { OrbitControls } from "@react-three/drei";
 import { Box3, Color, Group, Mesh } from "three";
@@ -9,7 +9,7 @@ import Lights from "./SceneElements/Lights";
 import { STLExporter } from "three/examples/jsm/exporters/STLExporter";
 import Camera from "./SceneElements/Camera";
 
-const CAMERA_OFFSET = 150
+const CAMERA_OFFSET = 200
 const POSITION_FACTOR = 140
 const LIGHT_DISTANCE = 350
 const FLOOR_DISTANCE = .4
@@ -74,7 +74,6 @@ const SceneSetup: React.FC<SceneSetupProps> = (
 ) => {
     const {camera} = useThree()
     const [mesh, setMesh] = useState<Mesh>(null)
-    const [group, setGroup] = useState<Group>(null)
 
     const [meshDims, setMeshDims] = useState<ModelDimensions>({
         width: 0,
@@ -82,7 +81,6 @@ const SceneSetup: React.FC<SceneSetupProps> = (
         length: 0,
         boundingRadius: 0
     })
-    const [zOffset, setZOffset] = useState(0)
 
     const [cameraTarget, setCameraTarget] = useState<[number, number, number]>([0, 0, 0])
     const [sceneReady, setSceneReady] = useState(false)
@@ -96,9 +94,8 @@ const SceneSetup: React.FC<SceneSetupProps> = (
         ((loader) => loader.setRequestHeader(extraHeaders))
     )
 
-    function onLoaded(dims: ModelDimensions, mesh: Mesh, group: Group) {
+    function onLoaded(dims: ModelDimensions, mesh: Mesh) {
         setMesh(mesh)
-        setGroup(group)
         const {width, length, height, boundingRadius} = dims
         setMeshDims(dims)
         const f = boundingRadius/POSITION_FACTOR
@@ -121,33 +118,40 @@ const SceneSetup: React.FC<SceneSetupProps> = (
         }
     }, [mesh])
 
-    useEffect(() => {
-        if (group) setZOffset(-(new Box3().setFromObject(group).min.z))
-    }, [rotationZ, rotationX, rotationY, group])
+    useFrame(({scene}) => {
+        const mesh = scene.getObjectByName("mesh") as Mesh
+        const group = scene.getObjectByName("group") as Group
+        const bbox = new Box3().setFromObject(mesh)
+        const height = bbox.max.z-bbox.min.z
+        group.position.z = height/2
+    })
+
 
     const cameraPosition: [number, number, number] = [
-        -CAMERA_OFFSET * meshDims.boundingRadius/POSITION_FACTOR,
+        -.5*CAMERA_OFFSET * meshDims.boundingRadius/POSITION_FACTOR,
         -CAMERA_OFFSET * meshDims.boundingRadius/POSITION_FACTOR,
         Math.max(meshDims.height, 100)
     ]
 
-    const meshPosition: [number, number, number] = [
+    const modelPosition: [number, number, number] = [
         positionX || (meshDims.width*scale)/2,
         positionY || (meshDims.length*scale)/2,
-        (meshDims.height*scale)/2+zOffset
+        0
     ]
 
     return (
         <>
             <scene background={BACKGROUND}/>
-            {sceneReady && showAxis && <axesHelper scale={[100, 100, 100]}/>}
+            {sceneReady && showAxis && <axesHelper scale={[50, 50, 50]}/>}
             <Camera
                 position={cameraPosition}
             />
             <Model3D
+                name={"group"}
+                meshProps={{name: "mesh"}}
                 scale={scale}
                 geometry={geometry}
-                position={meshPosition}
+                position={modelPosition}
                 rotation={[rotationX, rotationY, rotationZ]}
                 visible={sceneReady}
                 materialProps={{color}}
@@ -162,8 +166,8 @@ const SceneSetup: React.FC<SceneSetupProps> = (
             />
             <Lights
                 distance={LIGHT_DISTANCE}
-                offsetX={meshPosition[0]}
-                offsetY={meshPosition[1]}
+                offsetX={modelPosition[0]}
+                offsetY={modelPosition[1]}
             />
             {sceneReady && orbitControls && <OrbitControls target={cameraTarget} />}
         </>
