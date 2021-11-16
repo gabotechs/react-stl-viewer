@@ -32,10 +32,12 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
     return (
         <>
             {file && <StlViewer
-                file={file}
+                url={URL.createObjectURL(file)}
                 style={style}
                 shadows
-                color={"#008675"}
+                modelProps={{
+                    color: "#008675"
+                }}
                 {...extraProps}
                 {...props}
             />}

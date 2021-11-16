@@ -1,45 +1,41 @@
-import React, { HTMLProps, useMemo } from "react"
+import React, { HTMLProps } from "react"
 import { Canvas } from "@react-three/fiber";
-import StlModel, { StlModelProps } from "./StlModel";
+import SceneSetup, { SceneSetupProps } from "./SceneSetup";
 import ErrorBoundary from "./ErrorBoundary";
 import { PCFSoftShadowMap } from "three";
 
-export interface StlViewerProps extends
-    Omit<HTMLProps<HTMLDivElement>, "color" | "onError">,
-    Omit<StlModelProps, "url"> {
-    url?: string
-    file?: File
+type DivProps =  Omit<HTMLProps<HTMLDivElement>, "color" | "onError">
+
+export interface StlViewerProps extends DivProps, SceneSetupProps {
     onError?(err: Error): void,
     canvasId?: string
 }
 
 const StlViewer: React.FC<StlViewerProps> = (
     {
-        url: _url,
-        file,
-        color,
+        url,
+        modelProps,
+        floorProps,
         children,
         onError,
         extraHeaders,
         onFinishLoading,
         canvasId,
         shadows,
+        showAxis,
+        orbitControls,
         ...otherProps
     }
 ) => {
-
-    const url = useMemo((): string => {
-        if (_url) return _url
-        if (file) return URL.createObjectURL(file)
-        throw new Error("url or file must be defined")
-    }, [_url, file])
-
-    const modelProps: StlModelProps = {
+    const sceneProps: SceneSetupProps = {
         url,
-        color,
+        modelProps,
+        floorProps,
         extraHeaders,
         onFinishLoading,
-        shadows
+        shadows,
+        showAxis,
+        orbitControls
     }
 
     return (
@@ -52,11 +48,11 @@ const StlViewer: React.FC<StlViewerProps> = (
                         id={canvasId}
                         style={{width: '100%', height: '100%'}}
                     >
-                        <StlModel {...modelProps}/>
+                        <SceneSetup {...sceneProps}/>
+                        {children}
                     </Canvas>
                 </React.Suspense>
             </ErrorBoundary>
-            {children}
         </div>
     )
 }
