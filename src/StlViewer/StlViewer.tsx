@@ -22,7 +22,7 @@ const StlViewer: React.FC<StlViewerProps> = (
         onFinishLoading,
         canvasId,
         shadows,
-        showAxis,
+        showAxes,
         orbitControls,
         ...otherProps
     }
@@ -34,7 +34,7 @@ const StlViewer: React.FC<StlViewerProps> = (
         extraHeaders,
         onFinishLoading,
         shadows,
-        showAxis,
+        showAxes,
         orbitControls
     }
 

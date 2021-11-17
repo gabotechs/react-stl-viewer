@@ -54,7 +54,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 | `modelProps`               | `ModelProps`               | `false`      | 3d model properties, see below |
 | `floorProps`               | `FloorProps`               | `false`      | floor properties, see below |
 | `shadows`                  | `boolean`                  | `false`      | render shadows projected by the model on the ground |
-| `showAxis`                 | `boolean`                  | `false`      | show x y z axis |
+| `showAxes`                 | `boolean`                  | `false`      | show x y z axis |
 | `orbitControls`            | `boolean`                  | `false`      | enable camera orbit controls|
 | `extraHeaders`             | `Record<string, string>`   | `false`      | custom headers for making the http query |
 | `onFinishLoading`          | `(ev: ModelDimensions) => any`| `false`   | callback triggered when Stl is fully loaded |

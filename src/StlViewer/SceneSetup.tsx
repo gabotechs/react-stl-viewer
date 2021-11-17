@@ -40,7 +40,7 @@ export interface SceneSetupProps {
     url: string
     extraHeaders?: Record<string, string>
     shadows?: boolean
-    showAxis?: boolean
+    showAxes?: boolean
     orbitControls?: boolean
     onFinishLoading?: (ev: ModelDimensions) => any
     modelProps?: ModelProps
@@ -53,7 +53,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
         url,
         extraHeaders,
         shadows,
-        showAxis,
+        showAxes,
         orbitControls,
         onFinishLoading,
         modelProps: {
@@ -142,7 +142,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     return (
         <>
             <scene background={BACKGROUND}/>
-            {sceneReady && showAxis && <axesHelper scale={[50, 50, 50]}/>}
+            {sceneReady && showAxes && <axesHelper scale={[50, 50, 50]}/>}
             <Camera
                 position={cameraPosition}
             />
