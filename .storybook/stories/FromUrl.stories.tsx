@@ -36,7 +36,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                     backgroundColor: "white"
                 }}
                 shadows
-                showAxis
+                showAxes
                 orbitControls
                 modelProps={{
                     positionX: 150,
