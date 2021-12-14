@@ -13,7 +13,7 @@ npm install --save react-stl-viewer
 ```
 or
 ```shell
-yarn install react-stl-viewer
+yarn add react-stl-viewer
 ```
 
 ## Usage
