@@ -1,6 +1,6 @@
 {
   "name": "react-stl-viewer",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "react component for visualizing 3d models in the browser using three.js",
   "author": "Gabriel Musat",
   "license": "MIT",
