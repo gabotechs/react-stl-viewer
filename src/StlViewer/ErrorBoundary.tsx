@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from "react"
 
 interface IProps {
-    onError?: (err) => void
+    onError?: (err: Error) => void
 }
 
 interface IState {

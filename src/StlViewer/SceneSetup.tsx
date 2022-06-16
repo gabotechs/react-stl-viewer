@@ -72,7 +72,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     },
 ) => {
     const {camera} = useThree()
-    const [mesh, setMesh] = useState<Mesh>(null)
+    const [mesh, setMesh] = useState<Mesh>()
 
     const [meshDims, setMeshDims] = useState<ModelDimensions>({
         width: 0,
@@ -90,7 +90,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     const geometry = useLoader(
         STLLoader,
         url,
-        ((loader) => loader.setRequestHeader(extraHeaders))
+        ((loader) => loader.setRequestHeader(extraHeaders ?? {}))
     )
 
     function onLoaded(dims: ModelDimensions, mesh: Mesh) {
@@ -107,7 +107,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     }
 
     useEffect(() => {
-        if (!ref) return
+        if (!ref || !mesh) return
         ref.current = {
             save: () => new Blob(
                 [new STLExporter().parse(mesh, {binary: true})],

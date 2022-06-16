@@ -47,7 +47,7 @@ const Model3D: React.FC<Model3DProps> = (
     }, [geometry])
 
     useFrame(() => {
-        if (!loading || !geometry.boundingSphere) return
+        if (!loading || !geometry.boundingSphere || !mesh.current || !group.current) return
         new Box3().setFromObject(mesh.current) // this appears to set the correct property on geometry.boundingBox
         const {min, max} = geometry.boundingBox || {min: {x: 0, y: 0, z: 0}, max: {x: 0, y: 0, z: 0}}
         geometry.computeVertexNormals()
