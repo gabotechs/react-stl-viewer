@@ -46,6 +46,10 @@ function App() {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
+## Demo
+
+You can see working the examples from `.storybook/stories` [here](https://gabotechs.github.io/react-stl-viewer)
+
 ## Props
 
 | Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
