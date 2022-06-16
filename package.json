@@ -44,7 +44,7 @@
   "module": "lib/index.esm.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsc && rollup -c",
     "test": "jest --passWithNoTests",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
