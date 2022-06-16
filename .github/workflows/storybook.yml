@@ -1,0 +1,25 @@
+name: Storybook
+on:
+  push:
+    branches:
+      - master
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - name: Install and Build 🔧
+        run: |
+          yarn install
+          yarn test
+          yarn build-storybook
+      - name: Deploy Storybook 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: gh-pages
+          folder: storybook-static

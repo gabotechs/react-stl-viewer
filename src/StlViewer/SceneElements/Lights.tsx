@@ -27,11 +27,11 @@ const Lights: React.FC<LightsProps> = (
                 [-distance+offsetX, offsetY, distance+offsetZ],
                 [offsetX, -distance+offsetY, distance+offsetZ],
                 [offsetX, distance+offsetY, offsetZ]
-            ].map((position: [number, number, number], index) => (
+            ].map((position, index) => (
                 <spotLight
                     key={index}
                     intensity={.4}
-                    position={position}
+                    position={position as [number, number, number]}
                 />
             ))}
         </>
