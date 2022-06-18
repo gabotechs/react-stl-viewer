@@ -35,6 +35,7 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 url={URL.createObjectURL(file)}
                 style={style}
                 shadows
+                orbitControls
                 modelProps={{
                     color: "#008675"
                 }}
