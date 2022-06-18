@@ -1,8 +1,9 @@
 import React, { CSSProperties, useEffect, useState } from "react"
 import { useFrame, useLoader } from "@react-three/fiber";
-import { STLLoader, STLExporter } from "three-stdlib";
+import { STLLoader } from "three-stdlib";
 import { OrbitControls } from "@react-three/drei";
 import { Box3, Color, Group, Mesh } from "three";
+import { STLExporter } from "./exporters/STLExporter";
 import Model3D, { ModelDimensions } from "./SceneElements/Model3D";
 import Floor from "./SceneElements/Floor";
 import Lights from "./SceneElements/Lights";
