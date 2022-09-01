@@ -3,7 +3,8 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import replace from 'rollup-plugin-replace';
 
 const packageJson = require("./package.json");
 
@@ -26,7 +27,12 @@ export default [
             peerDepsExternal(),
             commonjs(),
             nodePolyfills(),
-            resolve({ preferBuiltins: false }),
+            resolve({ preferBuiltins: true }),
+            replace({
+                // FIXME: https://github.com/facebook/create-react-app/issues/11756
+                "require('fs')": "require('util')",
+                delimiters: ['', '']
+            }),
             typescript({ tsconfig: "./tsconfig.json" }),
         ],
     },
