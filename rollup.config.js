@@ -3,6 +3,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 const packageJson = require("./package.json");
 
@@ -23,8 +24,9 @@ export default [
         ],
         plugins: [
             peerDepsExternal(),
-            resolve(),
             commonjs(),
+            nodePolyfills(),
+            resolve({ preferBuiltins: false }),
             typescript({ tsconfig: "./tsconfig.json" }),
         ],
     },

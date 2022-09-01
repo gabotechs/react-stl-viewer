@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0",
     "rollup": "^2.75.6",
     "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.32.1",
