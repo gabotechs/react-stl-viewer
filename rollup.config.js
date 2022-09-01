@@ -30,7 +30,9 @@ export default [
             resolve({ preferBuiltins: true }),
             replace({
                 // FIXME: https://github.com/facebook/create-react-app/issues/11756
-                "require('fs')": "require('util')",
+                "var fs = require('fs');": "// var fs = require('fs');",
+                "var buffer = arrayBufferToNodeBuffer(arrayBuffer);": "// var buffer = arrayBufferToNodeBuffer(arrayBuffer);",
+                "fs.writeFileSync(fileName, buffer);": "// fs.writeFileSync(fileName, buffer);",
                 delimiters: ['', '']
             }),
             typescript({ tsconfig: "./tsconfig.json" }),
