@@ -38,8 +38,8 @@ const Model3D: React.FC<Model3DProps> = (
         ...otherProps
     }
 ) => {
-    const mesh = useRef<Mesh>()
-    const group = useRef<Group>()
+    const mesh = useRef<Mesh>(null)
+    const group = useRef<Group>(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const Model3D: React.FC<Model3DProps> = (
             <mesh
                 ref={mesh}
                 scale={[scale, scale, scale]}
-                castShadow
+                castShadow={true}
                 {...meshProps}
             >
                 <primitive object={geometry} attach={"geometry"} />
