@@ -5,6 +5,7 @@ import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import replace from 'rollup-plugin-replace';
+import filesize from 'rollup-plugin-filesize';
 
 const packageJson = require("./package.json");
 
@@ -36,6 +37,7 @@ export default [
                 delimiters: ['', '']
             }),
             typescript({ tsconfig: "./tsconfig.json" }),
+            filesize()
         ],
     },
     {

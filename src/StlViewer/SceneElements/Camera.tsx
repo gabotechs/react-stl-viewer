@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { PerspectiveCamera } from "@react-three/drei";
 import { PerspectiveCameraProps, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 
@@ -49,8 +48,7 @@ const Camera: React.FC<CameraProps> = (
     }, [camera, center])
     
     return (
-        <PerspectiveCamera
-            makeDefault
+        <perspectiveCamera
             near={1}
             far={1000}
             {...otherProps}
