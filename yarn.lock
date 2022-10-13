@@ -2186,12 +2186,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-three/fiber@npm:^8.6.2":
-  version: 8.6.2
-  resolution: "@react-three/fiber@npm:8.6.2"
+"@react-three/fiber@npm:^8.8.10":
+  version: 8.8.10
+  resolution: "@react-three/fiber@npm:8.8.10"
   dependencies:
     "@babel/runtime": ^7.17.8
     "@types/react-reconciler": ^0.26.7
+    its-fine: ^1.0.6
     react-reconciler: ^0.27.0
     react-use-measure: ^2.1.1
     scheduler: ^0.21.0
@@ -2216,7 +2217,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 3a4ea15fc05e4a3eb4c56d04f43846564fd880f93474625c47d95b4ff87b6289541deea5511672c3feee1fd687497760a14ed3c7f53335619fa7bcdb89174603
+  checksum: 35a2816563cb430632d81c74b7cb388c7e1f7332d11849767197c57b107e49be6190b3d1fb93c4227e4e6840792b9e263933d6478980a323b8355508139c7bf1
   languageName: node
   linkType: hard
 
@@ -3682,6 +3683,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/offscreencanvas@npm:^2019.6.4":
+  version: 2019.7.0
+  resolution: "@types/offscreencanvas@npm:2019.7.0"
+  checksum: 018cfcd19e0c59c44d14ba61caaca7246f77fbb512839c7881654b7f2b6591dbdd5857362eccbf49f29cdc93724e71a4b37c8b6cf203388f9c04e913a53ea390
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -3739,6 +3747,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 4122d2b08580f775d0aeae9bd10b68248f894096ed14c0ebbc143ef712e21b159e89d0c628bd95dd3329947fc1ee94a0cb1d2d32b32b1d5d225e70030e91e58f
+  languageName: node
+  linkType: hard
+
+"@types/react-reconciler@npm:^0.28.0":
+  version: 0.28.0
+  resolution: "@types/react-reconciler@npm:0.28.0"
+  dependencies:
+    "@types/react": "*"
+  checksum: d7b3f870a9c2c0f6f9c27e3fedd4cb495bd377312d856ee846475152e8a817b032e47f8d349ec2a51a95be5c674a288288173ef658e469369d6fec1f77159cbb
   languageName: node
   linkType: hard
 
@@ -9622,6 +9639,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"its-fine@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "its-fine@npm:1.0.6"
+  dependencies:
+    "@types/react-reconciler": ^0.28.0
+  peerDependencies:
+    react: ">=18.0"
+  checksum: bfd4f775084dc1f301280e85fdbfa5b75dff72603fe6d03e7e0181b0e3369ad2cdcb5be9015d21e6990ddd79fcef2e0f075a52023492545215661d125f980bf4
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^28.0.2":
   version: 28.0.2
   resolution: "jest-changed-files@npm:28.0.2"
@@ -13360,7 +13388,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-stl-viewer@workspace:."
   dependencies:
-    "@react-three/fiber": ^8.6.2
+    "@react-three/fiber": ^8.8.10
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-node-resolve": ^13.3.0
     "@rollup/plugin-typescript": ^8.3.3
@@ -13385,7 +13413,7 @@ __metadata:
     rollup-plugin-postcss: ^4.0.2
     rollup-plugin-typescript2: ^0.32.1
     three: ^0.132.2
-    three-stdlib: ^2.14.3
+    three-stdlib: ^2.17.2
     ts-jest: ^28.0.5
     typescript: ^4.7.3
   peerDependencies:
@@ -15245,11 +15273,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three-stdlib@npm:^2.14.3":
-  version: 2.14.3
-  resolution: "three-stdlib@npm:2.14.3"
+"three-stdlib@npm:^2.17.2":
+  version: 2.17.2
+  resolution: "three-stdlib@npm:2.17.2"
   dependencies:
     "@babel/runtime": ^7.16.7
+    "@types/offscreencanvas": ^2019.6.4
     "@webgpu/glslang": ^0.0.15
     chevrotain: ^10.1.2
     draco3d: ^1.4.1
@@ -15261,7 +15290,7 @@ __metadata:
     zstddec: ^0.0.2
   peerDependencies:
     three: ">=0.122.0"
-  checksum: cd602cf1279b12fd419b33e74785a81bf43cd517e0fb333a0fb3ffb0499f38f3004b44b0c824e89b27ac54556e07b0eecdc015f1d18b5c427924c452efe28afc
+  checksum: 8a6f7cdb75bda4b7cf6d719442bf0e2305e43b3850f08ab4081e5131a1343cc480d31181e8fe5b46e9376979e3ec9381960fb82b566360c1155dd9f9d402bb8e
   languageName: node
   linkType: hard
 
