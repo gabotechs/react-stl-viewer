@@ -4,7 +4,6 @@ import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import replace from 'rollup-plugin-replace';
 import filesize from 'rollup-plugin-filesize';
 
 const packageJson = require("./package.json");
@@ -29,13 +28,6 @@ export default [
             commonjs(),
             nodePolyfills(),
             resolve({ preferBuiltins: true }),
-            replace({
-                // FIXME: https://github.com/facebook/create-react-app/issues/11756
-                "var fs = require('fs');": "// var fs = require('fs');",
-                "var buffer = arrayBufferToNodeBuffer(arrayBuffer);": "// var buffer = arrayBufferToNodeBuffer(arrayBuffer);",
-                "fs.writeFileSync(fileName, buffer);": "// fs.writeFileSync(fileName, buffer);",
-                delimiters: ['', '']
-            }),
             typescript({ tsconfig: "./tsconfig.json" }),
             filesize()
         ],

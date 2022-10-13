@@ -27,7 +27,6 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-typescript2": "^0.32.1",
     "three": "^0.132.2",
     "ts-jest": "^28.0.5",
@@ -46,7 +45,7 @@
   "module": "lib/index.esm.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc && rollup -c",
+    "build": "rm -rf lib && tsc && rollup -c",
     "test": "jest --passWithNoTests",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
