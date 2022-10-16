@@ -15,6 +15,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           yarn install
+          yarn lint
           yarn test
           yarn build
       - name: Bump version
