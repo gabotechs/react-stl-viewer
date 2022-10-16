@@ -1,52 +1,56 @@
-import React, { HTMLProps } from "react"
-import { Canvas } from "@react-three/fiber";
-import SceneSetup, { SceneSetupProps } from "./SceneSetup";
-import ErrorBoundary from "./ErrorBoundary";
-import { PCFSoftShadowMap } from "three";
+import React, { HTMLProps } from 'react'
+import { Canvas } from '@react-three/fiber'
+import SceneSetup, { SceneSetupProps } from './SceneSetup'
+import ErrorBoundary from './ErrorBoundary'
+import { PCFSoftShadowMap } from 'three'
 
-type DivProps =  Omit<HTMLProps<HTMLDivElement>, "color" | "onError">
+type DivProps = Omit<HTMLProps<HTMLDivElement>, 'color' | 'onError'>
 
 export interface StlViewerProps extends DivProps, SceneSetupProps {
-    onError?(err: Error): void,
-    canvasId?: string
+  onError?: (err: Error) => void
+  canvasId?: string
 }
 
 const StlViewer: React.FC<StlViewerProps> = (
-    {
-        url,
-        modelProps,
-        floorProps,
-        children,
-        onError,
-        extraHeaders,
-        onFinishLoading,
-        canvasId,
-        shadows,
-        showAxes,
-        orbitControls,
-        ...otherProps
-    }
+  {
+    url,
+    modelProps,
+    floorProps,
+    children,
+    onError,
+    extraHeaders,
+    onFinishLoading,
+    canvasId,
+    shadows,
+    showAxes,
+    orbitControls,
+    ...otherProps
+  }
 ) => {
-    const sceneProps: SceneSetupProps = {
-        url,
-        modelProps,
-        floorProps,
-        extraHeaders,
-        onFinishLoading,
-        shadows,
-        showAxes,
-        orbitControls
-    }
+  const sceneProps: SceneSetupProps = {
+    url,
+    modelProps,
+    floorProps,
+    extraHeaders,
+    onFinishLoading,
+    shadows,
+    showAxes,
+    orbitControls
+  }
 
-    return (
+  return (
         <div {...otherProps}>
             <ErrorBoundary onError={onError}>
                 <React.Suspense fallback={null}>
                     <Canvas
                         shadows
-                        gl={{preserveDrawingBuffer: true, shadowMapType: PCFSoftShadowMap, antialias: true}}
+                        gl={{
+                          preserveDrawingBuffer: true,
+                          shadowMapType: PCFSoftShadowMap,
+                          antialias: true
+                        }}
                         id={canvasId}
-                        style={{width: '100%', height: '100%'}}
+                        style={{ width: '100%', height: '100%' }}
                     >
                         <SceneSetup {...sceneProps}/>
                         {children}
@@ -54,7 +58,7 @@ const StlViewer: React.FC<StlViewerProps> = (
                 </React.Suspense>
             </ErrorBoundary>
         </div>
-    )
+  )
 }
 
 export default StlViewer

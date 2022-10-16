@@ -1,41 +1,40 @@
-import React from "react"
+import React from 'react'
 
 export interface LightsProps {
-    distance: number
-    offsetX?: number
-    offsetY?: number
-    offsetZ?: number
+  distance: number
+  offsetX?: number
+  offsetY?: number
+  offsetZ?: number
 }
 
 const Lights: React.FC<LightsProps> = (
-    {
-        offsetX=0,
-        offsetY=0,
-        offsetZ=0,
-        distance
-    }
+  {
+    offsetX=0,
+    offsetY=0,
+    offsetZ=0,
+    distance
+  }
 ) => {
-
-    return (
+  return (
         <>
             <ambientLight/>
             <spotLight
-                castShadow
+                castShadow={true}
                 position={[offsetX, offsetY, distance+offsetZ]}
             />
             {[
-                [-distance+offsetX, offsetY, distance+offsetZ],
-                [offsetX, -distance+offsetY, distance+offsetZ],
-                [offsetX, distance+offsetY, offsetZ]
+              [-distance+offsetX, offsetY, distance+offsetZ],
+              [offsetX, -distance+offsetY, distance+offsetZ],
+              [offsetX, distance+offsetY, offsetZ]
             ].map((position, index) => (
                 <spotLight
                     key={index}
-                    intensity={.4}
+                    intensity={0.4}
                     position={position as [number, number, number]}
                 />
             ))}
         </>
-    )
+  )
 }
 
 export default Lights

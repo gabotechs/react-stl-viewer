@@ -1,32 +1,33 @@
-import React, { ErrorInfo } from "react"
+import React from 'react'
 
 interface IProps {
-    onError?: (err: Error) => void
+  onError?: (err: Error) => void
 }
 
 interface IState {
-    message: string
+  message: string
 }
 
 class ErrorBoundary extends React.Component<IProps, IState> {
-    state = {message: ""}
+  state = { message: '' }
 
-    shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any): boolean {
-        if (!this.state.message && nextState.message && nextProps.onError) nextProps.onError(new Error(nextState.message))
-        return true
+  shouldComponentUpdate (nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any): boolean {
+    if ((this.state.message === '') && (nextState.message !== '') && (nextProps.onError != null)) {
+      nextProps.onError(new Error(nextState.message))
     }
+    return true
+  }
 
-    static getDerivedStateFromError(error: Error) {
-        return { message: error.toString() };
-    }
+  static getDerivedStateFromError (error: Error): IState {
+    return { message: error.message }
+  }
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    }
+  componentDidCatch (): void {}
 
-    render() {
-        if (this.state.message) return null
-        return this.props.children;
-    }
+  render (): React.ReactNode | null {
+    if (this.state.message !== '') return null
+    return this.props.children
+  }
 }
 
 export default ErrorBoundary
