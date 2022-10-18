@@ -14180,8 +14180,8 @@ __metadata:
     ts-jest: ^28.0.5
     typescript: ^4.7.3
   peerDependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^17.0.2 || ^18.0.0
+    react-dom: ^17.0.2 || ^18.0.0
     three: ^0.132.2
   languageName: unknown
   linkType: soft
