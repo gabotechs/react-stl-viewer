@@ -14,7 +14,7 @@ const OrbitControls: React.FC<OrbitControlsProps> = (props) => {
   const domElement = events.connected ?? gl.domElement
 
   useEffect(() => {
-    controls.connect(domElement)
+    controls.connect(domElement as HTMLElement)
     return () => controls.dispose()
   })
 
