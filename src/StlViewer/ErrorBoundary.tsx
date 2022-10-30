@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface IProps {
+interface IProps extends React.PropsWithChildren {
   onError?: (err: Error) => void
 }
 
@@ -24,7 +24,7 @@ class ErrorBoundary extends React.Component<IProps, IState> {
 
   componentDidCatch (): void {}
 
-  render (): React.ReactNode | null {
+  render (): React.ReactNode {
     if (this.state.message !== '') return null
     return this.props.children
   }
