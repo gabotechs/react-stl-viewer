@@ -2254,9 +2254,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-three/fiber@npm:8.9.0":
-  version: 8.9.0
-  resolution: "@react-three/fiber@npm:8.9.0"
+"@react-three/fiber@npm:8.9.1":
+  version: 8.9.1
+  resolution: "@react-three/fiber@npm:8.9.1"
   dependencies:
     "@babel/runtime": ^7.17.8
     "@types/react-reconciler": ^0.26.7
@@ -2285,7 +2285,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: f426aca32f9ecc52aa753d767065f9b2d1865f8dbe523e2109b3b2d07a9054fa311e2473cc58f94a8b5662aa32033a5fde6ad5e5efdbf5582136109a1c4d1d9e
+  checksum: 75aabbc206a306bc5e46cc491327cd1e409fd46f2eb95864a0c8925097cef9c7f076547ff19c530ccf3192bd36451a28d5eefa0b0c21b60c49638b8a32dbd454
   languageName: node
   linkType: hard
 
@@ -2306,16 +2306,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-inject@npm:^4.0.0":
-  version: 4.0.4
-  resolution: "@rollup/plugin-inject@npm:4.0.4"
+"@rollup/plugin-inject@npm:^5.0.1":
+  version: 5.0.2
+  resolution: "@rollup/plugin-inject@npm:5.0.2"
   dependencies:
-    "@rollup/pluginutils": ^3.1.0
-    estree-walker: ^2.0.1
-    magic-string: ^0.25.7
+    "@rollup/pluginutils": ^5.0.1
+    estree-walker: ^2.0.2
+    magic-string: ^0.26.4
   peerDependencies:
-    rollup: ^1.20.0 || ^2.0.0
-  checksum: 22a1847372a96296a5b176af3d5b23ac7b48143a32c77ec4efed38daf4b0d1399a3cd144496d65731299984c5f98c9e00dc6a7f53d0fe87bd4aab2d4bd7b8289
+    rollup: ^1.20.0||^2.0.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 5919093df95237d0ef00ade513c42d4bfcc88a527f73663427880dddd55f26004d5d1877e15436f2a76e87bfe7158b51fa5b295f28a6f73e062b701a720cb6b3
   languageName: node
   linkType: hard
 
@@ -2372,6 +2375,22 @@ __metadata:
     estree-walker: ^2.0.1
     picomatch: ^2.2.2
   checksum: 6bc41f22b1a0f1efec3043899e4d3b6b1497b3dea4d94292d8f83b4cf07a1073ecbaedd562a22d11913ff7659f459677b01b09e9598a98936e746780ecc93a12
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.0.1":
+  version: 5.0.2
+  resolution: "@rollup/pluginutils@npm:5.0.2"
+  dependencies:
+    "@types/estree": ^1.0.0
+    estree-walker: ^2.0.2
+    picomatch: ^2.3.1
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: edea15e543bebc7dcac3b0ac8bc7b8e8e6dbd46e2864dbe5dd28072de1fbd5b0e10d545a610c0edaa178e8a7ac432e2a2a52e547ece1308471412caba47db8ce
   languageName: node
   linkType: hard
 
@@ -3597,7 +3616,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:*":
+"@types/estree@npm:*, @types/estree@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/estree@npm:1.0.0"
   checksum: 910d97fb7092c6738d30a7430ae4786a38542023c6302b95d46f49420b797f21619cdde11fa92b338366268795884111c2eb10356e4bd2c8ad5b92941e9e6443
@@ -7754,7 +7773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"estree-walker@npm:^2.0.1":
+"estree-walker@npm:^2.0.1, estree-walker@npm:^2.0.2":
   version: 2.0.2
   resolution: "estree-walker@npm:2.0.2"
   checksum: 6151e6f9828abe2259e57f5fd3761335bb0d2ebd76dc1a01048ccee22fabcfef3c0859300f6d83ff0d1927849368775ec5a6d265dde2f6de5a1be1721cd94efc
@@ -11114,7 +11133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.26.6":
+"magic-string@npm:^0.26.4, magic-string@npm:^0.26.7":
   version: 0.26.7
   resolution: "magic-string@npm:0.26.7"
   dependencies:
@@ -13830,7 +13849,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-stl-viewer@workspace:."
   dependencies:
-    "@react-three/fiber": 8.9.0
+    "@react-three/fiber": 8.9.1
     "@rollup/plugin-commonjs": ^22.0.0
     "@rollup/plugin-node-resolve": ^13.3.0
     "@rollup/plugin-typescript": ^8.3.3
@@ -13853,13 +13872,13 @@ __metadata:
     postcss: ^8.4.14
     react: ^18.2.0
     react-dom: ^18.2.0
-    rollup: ^2.79.0
-    rollup-plugin-dts: ^4.2.2
+    rollup: ^3.2.5
+    rollup-plugin-dts: ^5.0.0
     rollup-plugin-filesize: ^9.1.2
     rollup-plugin-peer-deps-external: ^2.2.4
-    rollup-plugin-polyfill-node: ^0.10.2
+    rollup-plugin-polyfill-node: ^0.11.0
     rollup-plugin-postcss: ^4.0.2
-    rollup-plugin-typescript2: ^0.32.1
+    rollup-plugin-typescript2: ^0.34.1
     three: ^0.133.0
     three-stdlib: 2.17.2
     ts-jest: ^28.0.5
@@ -14382,19 +14401,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:^4.2.2":
-  version: 4.2.3
-  resolution: "rollup-plugin-dts@npm:4.2.3"
+"rollup-plugin-dts@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "rollup-plugin-dts@npm:5.0.0"
   dependencies:
     "@babel/code-frame": ^7.18.6
-    magic-string: ^0.26.6
+    magic-string: ^0.26.7
   peerDependencies:
-    rollup: ^2.55
+    rollup: ^3.0.0
     typescript: ^4.1
   dependenciesMeta:
     "@babel/code-frame":
       optional: true
-  checksum: b1de94202d0574e7c12105bf0d013e7142c1b9b74d6b83d194d870dcdc281e90cff45ed47a0ab1c62280cc25e75f522e1278ec0ba89c8f75b8bcb56dc98c2c63
+  checksum: feb2d614528c255ee698120be0fd404b0a4fa312362a3d687d76551157464decc66be6dfecb624c42bc64a9e6298ed21e13e689dc9b144acab8294cd08a53455
   languageName: node
   linkType: hard
 
@@ -14423,14 +14442,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-polyfill-node@npm:^0.10.2":
-  version: 0.10.2
-  resolution: "rollup-plugin-polyfill-node@npm:0.10.2"
+"rollup-plugin-polyfill-node@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "rollup-plugin-polyfill-node@npm:0.11.0"
   dependencies:
-    "@rollup/plugin-inject": ^4.0.0
+    "@rollup/plugin-inject": ^5.0.1
   peerDependencies:
-    rollup: ^1.20.0 || ^2.0.0
-  checksum: 10806925ddf17d9a49bea885fa30296dec20ac59c43986c6f1eca892dd260cc75cc2f77b098dbcb8bbf503c10c7aa4d3078f441c1e2384ba475c105273132c99
+    rollup: ^1.20.0 || ^2.0.0 || ^3.0.0
+  checksum: 059657c718154964c7b2e9140aa884fb1602a2f9348124f942d3ce4e5640fcf92733cd9096c77d7ff99842b3a07b7e237126b5b185d678f7f523aaf0d949e67b
   languageName: node
   linkType: hard
 
@@ -14457,19 +14476,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-typescript2@npm:^0.32.1":
-  version: 0.32.1
-  resolution: "rollup-plugin-typescript2@npm:0.32.1"
+"rollup-plugin-typescript2@npm:^0.34.1":
+  version: 0.34.1
+  resolution: "rollup-plugin-typescript2@npm:0.34.1"
   dependencies:
     "@rollup/pluginutils": ^4.1.2
     find-cache-dir: ^3.3.2
     fs-extra: ^10.0.0
-    resolve: ^1.20.0
+    semver: ^7.3.7
     tslib: ^2.4.0
   peerDependencies:
     rollup: ">=1.26.3"
     typescript: ">=2.4.0"
-  checksum: f41ab63ad1e4d21ec99fbf4a367abdf29ef95c41fd0a5612f2b60a8619f5fe633f75982bfbaf8fe9632bddfb6730ff9cb38be77d82561088168fcaccd2cd1e85
+  checksum: 107e66b9ab1aaf4b237564e500ea9de9f2d3f0a81be5139dc753fc76bbf00a1a2230eb1ec59145d2dfc4c4da9be8211f1f3e1370007efe1e24ce45a00905e558
   languageName: node
   linkType: hard
 
@@ -14482,9 +14501,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.79.0":
-  version: 2.79.1
-  resolution: "rollup@npm:2.79.1"
+"rollup@npm:^3.2.5":
+  version: 3.2.5
+  resolution: "rollup@npm:3.2.5"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -14492,7 +14511,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
+  checksum: 1779b778fe4b14f80a995a641d3a89a76e3651170536192022dce1821f1241ee49496353655aa812dc8f8334c89a302ad957b757d4370cf57e41ca270bb394fd
   languageName: node
   linkType: hard
 

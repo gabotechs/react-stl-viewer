@@ -27,19 +27,19 @@
     "postcss": "^8.4.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^2.79.0",
-    "rollup-plugin-dts": "^4.2.2",
+    "rollup": "^3.2.5",
+    "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-filesize": "^9.1.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-polyfill-node": "^0.10.2",
+    "rollup-plugin-polyfill-node": "^0.11.0",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.32.1",
+    "rollup-plugin-typescript2": "^0.34.1",
     "three": "^0.133.0",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@react-three/fiber": "8.9.0",
+    "@react-three/fiber": "8.9.1",
     "three-stdlib": "2.17.2"
   },
   "peerDependencies": {
