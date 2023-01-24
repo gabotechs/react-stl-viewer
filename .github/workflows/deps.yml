@@ -11,7 +11,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Check deps
-        uses: gabotechs/dep-tree-action@v0
+        uses: gabotechs/dep-tree-action@v0.6.2-patch-1
         with:
           entrypoints: src/index.ts
 
