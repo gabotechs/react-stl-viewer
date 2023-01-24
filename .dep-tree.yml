@@ -3,3 +3,6 @@ white_list:
     - "**/exporters/*"
   "**/SceneElements/*":
     - "**/SceneElements/*"
+black_list:
+  "**":
+    - "**"
