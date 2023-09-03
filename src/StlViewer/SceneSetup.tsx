@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useState, useMemo } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
 import { STLLoader } from 'three-stdlib/loaders/STLLoader'
 import { Box3, Color, Group, Mesh } from 'three'
@@ -8,6 +8,7 @@ import Floor from './SceneElements/Floor'
 import Lights from './SceneElements/Lights'
 import Camera, { CameraInitialPosition } from './SceneElements/Camera'
 import OrbitControls from './SceneElements/OrbitControls'
+import { LoopSubdivision } from 'three-subdivide'
 
 const INITIAL_LATITUDE = Math.PI / 8
 const INITIAL_LONGITUDE = -Math.PI / 8
@@ -46,6 +47,7 @@ export interface SceneSetupProps {
   onFinishLoading?: (ev: ModelDimensions) => any
   modelProps?: ModelProps
   floorProps?: FloorProps
+  subdivide?: number
 }
 
 const SceneSetup: React.FC<SceneSetupProps> = (
@@ -55,7 +57,8 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     shadows = false,
     showAxes = false,
     orbitControls = false,
-    onFinishLoading = () => {},
+    onFinishLoading = () => { },
+    subdivide = 0,
     modelProps: {
       ref,
       scale = 1,
@@ -95,11 +98,23 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     (loader) => loader.setRequestHeader(extraHeaders ?? {})
   )
 
-  function onLoaded (dims: ModelDimensions, mesh: Mesh): void {
+  const subdividedGeometry = useMemo(() => {
+    return LoopSubdivision.modify(geometry, subdivide, {
+      split: true,
+      uvSmooth: false,
+      preserveEdges: false,
+      flatOnly: false,
+      maxTriangles: Infinity
+    })
+  }, [geometry, subdivide])
+
+
+
+  function onLoaded(dims: ModelDimensions, mesh: Mesh): void {
     setMesh(mesh)
     const { width, length, height, boundingRadius } = dims
     setMeshDims(dims)
-    setModelCenter([positionX ?? width/2, positionY ?? length/2, height/2])
+    setModelCenter([positionX ?? width / 2, positionY ?? length / 2, height / 2])
     const maxGridDimension = Math.max(gridWidth ?? 0, gridLength ?? 0)
     const distance = maxGridDimension > 0
       ? maxGridDimension
@@ -128,49 +143,49 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     const mesh = scene.getObjectByName('mesh') as Mesh
     const group = scene.getObjectByName('group') as Group
     const bbox = new Box3().setFromObject(mesh)
-    const height = bbox.max.z-bbox.min.z
-    group.position.z = height/2
+    const height = bbox.max.z - bbox.min.z
+    group.position.z = height / 2
   })
 
   const modelPosition: [number, number, number] = [
-    positionX ?? (meshDims.width*scale)/2,
-    positionY ?? (meshDims.length*scale)/2,
+    positionX ?? (meshDims.width * scale) / 2,
+    positionY ?? (meshDims.length * scale) / 2,
     0
   ]
 
   return (
-        <>
-            <scene background={BACKGROUND}/>
-            {sceneReady && showAxes && <axesHelper scale={[50, 50, 50]}/>}
-            {(cameraInitialPosition != null) && <Camera
-                initialPosition={cameraInitialPosition}
-                center={modelCenter}
-            />}
-            <Model3D
-                name={'group'}
-                meshProps={{ name: 'mesh' }}
-                scale={scale}
-                geometry={geometry}
-                position={modelPosition}
-                rotation={[rotationX, rotationY, rotationZ]}
-                visible={sceneReady}
-                materialProps={{ color }}
-                onLoaded={onLoaded}
-            />
-            <Floor
-                width={gridWidth ?? gridLength}
-                length={gridLength ?? gridWidth}
-                visible={sceneReady}
-                noShadow={!shadows}
-                offset={FLOOR_DISTANCE}
-            />
-            <Lights
-                distance={LIGHT_DISTANCE}
-                offsetX={modelPosition[0]}
-                offsetY={modelPosition[1]}
-            />
-            {sceneReady && orbitControls && <OrbitControls target={modelCenter} />}
-        </>
+    <>
+      <scene background={BACKGROUND} />
+      {sceneReady && showAxes && <axesHelper scale={[50, 50, 50]} />}
+      {(cameraInitialPosition != null) && <Camera
+        initialPosition={cameraInitialPosition}
+        center={modelCenter}
+      />}
+      <Model3D
+        name={'group'}
+        meshProps={{ name: 'mesh' }}
+        scale={scale}
+        geometry={subdividedGeometry}
+        position={modelPosition}
+        rotation={[rotationX, rotationY, rotationZ]}
+        visible={sceneReady}
+        materialProps={{ color }}
+        onLoaded={onLoaded}
+      />
+      <Floor
+        width={gridWidth ?? gridLength}
+        length={gridLength ?? gridWidth}
+        visible={sceneReady}
+        noShadow={!shadows}
+        offset={FLOOR_DISTANCE}
+      />
+      <Lights
+        distance={LIGHT_DISTANCE}
+        offsetX={modelPosition[0]}
+        offsetY={modelPosition[1]}
+      />
+      {sceneReady && orbitControls && <OrbitControls target={modelCenter} />}
+    </>
   )
 }
 

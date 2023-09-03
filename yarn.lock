@@ -13881,6 +13881,7 @@ __metadata:
     rollup-plugin-typescript2: ^0.34.1
     three: ^0.133.0
     three-stdlib: 2.17.2
+    three-subdivide: ^1.1.5
     ts-jest: ^28.0.5
     typescript: ^4.7.3
   peerDependencies:
@@ -15771,6 +15772,15 @@ __metadata:
   peerDependencies:
     three: ">=0.122.0"
   checksum: 8a6f7cdb75bda4b7cf6d719442bf0e2305e43b3850f08ab4081e5131a1343cc480d31181e8fe5b46e9376979e3ec9381960fb82b566360c1155dd9f9d402bb8e
+  languageName: node
+  linkType: hard
+
+"three-subdivide@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "three-subdivide@npm:1.1.5"
+  peerDependencies:
+    three: ">= 0.125.0"
+  checksum: 5459b49943c9211ffaa0375ff8562692e9684f48459397a7215120da4f506429d8febbcf97faf934df9344121cf7145a6e432e79cb68c9aec239668c70285667
   languageName: node
   linkType: hard
 
