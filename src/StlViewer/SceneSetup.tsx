@@ -48,6 +48,15 @@ export interface SceneSetupProps {
   modelProps?: ModelProps
   floorProps?: FloorProps
   subdivide?: number
+  subdivideProps?: SubdivideProps
+}
+
+export interface SubdivideProps {
+  split: boolean
+  uvSmooth: boolean
+  preserveEdges: boolean
+  flatOnly: boolean
+  maxTriangles: number
 }
 
 const SceneSetup: React.FC<SceneSetupProps> = (
@@ -72,7 +81,14 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     floorProps: {
       gridWidth,
       gridLength
-    } = {}
+    } = {},
+    subdivideProps = {
+      split: true,
+      uvSmooth: false,
+      preserveEdges: false,
+      flatOnly: false,
+      maxTriangles: Infinity
+    }
   }
 ) => {
   const [mesh, setMesh] = useState<Mesh>()
@@ -98,16 +114,12 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     (loader) => loader.setRequestHeader(extraHeaders ?? {})
   )
 
-  const subdividedGeometry = useMemo(() => {
-    return LoopSubdivision.modify(geometry, subdivide, {
-      split: true,
-      uvSmooth: false,
-      preserveEdges: false,
-      flatOnly: false,
-      maxTriangles: Infinity
-    })
-  }, [geometry, subdivide])
-
+  const subdividedGeometry = useMemo(
+    () => subdivide > 0
+      ? LoopSubdivision.modify(geometry, subdivide, subdivideProps)
+      : undefined,
+    [geometry, subdivide]
+  )
 
 
   function onLoaded(dims: ModelDimensions, mesh: Mesh): void {
@@ -165,7 +177,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
         name={'group'}
         meshProps={{ name: 'mesh' }}
         scale={scale}
-        geometry={subdividedGeometry}
+        geometry={subdivide > 0 ? subdividedGeometry : geometry}
         position={modelPosition}
         rotation={[rotationX, rotationY, rotationZ]}
         visible={sceneReady}
