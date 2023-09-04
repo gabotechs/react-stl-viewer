@@ -64,6 +64,7 @@ You can see working the examples from `.storybook/stories` [here](https://gabote
 | `onFinishLoading`          | `(ev: ModelDimensions) => any`| `false`   | callback triggered when Stl is fully loaded |
 | `onError`                  | `(err: Error) => any`      | `false`      | callback triggered when an error occurred while loading Stl|
 | `canvasId`                 | `string`                   | `false`      | id of the canvas element used for rendering the model |
+| `subdivide`                    | `number`            | `0`      |subdivide-level, subdivide modifier ([support by three-subdivide](https://github.com/stevinz/three-subdivide)) iterations, total passes of subdivision to apply, generally between 1 to 5, more see [`SubdivideProps`](#subdivideprops)|
 The component also accepts ```<div/>``` props
 
 ## Interfaces
@@ -95,3 +96,18 @@ The component also accepts ```<div/>``` props
 | `width`                    | `number`                   | width of the 3d object |
 | `height`                   | `number`                   | height of the 3d object |
 | `length`                   | `number`                   | length of the 3d object |
+
+
+### SubdivideProps
+`react-stl-viewer` support subdivide modifier, you can smaller file sizes mesh to render smoother effects. So, why we need this? [-> more details #37](https://github.com/gabotechs/react-stl-viewer/pull/37#issuecomment-1704653068)
+ 
+
+ref: [three-subdivide](https://github.com/stevinz/three-subdivide#modify)
+| Prop                       | Type                       | Required | Notes                                                                                                                                                                                       |
+| ----------------------     | :------------------------: | :----------: | :----------------------------------------------------------:                                                                                                                                |
+| `split`                   | `boolean`                 |`false`    | split coplanar faces at their shared edges before subdividing? |
+| `uvSmooth`                | `boolean`                 |`false`    | smooth UV coordinates during subdivision?|
+| `preserveEdges`           | `boolean`                 |`false`    | should edges / breaks in geometry be ignored during subdivision?|
+| `flatOnly`                | `boolean`                |`false`    | subdivide triangles but do not apply smoothing?|
+| `maxTriangles`            | `number`                  |`false`    | limits subdivision to meshes with less than this number of triangles, default is `Infinity`|
+
