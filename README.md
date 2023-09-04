@@ -70,16 +70,17 @@ The component also accepts ```<div/>``` props
 
 ### ModelProps
 
-| Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
-| ----------------------     | :------------------------: | :----------: | :----------------------------------------------------------:                                                                                                                                |
-| `ref`                      | `{current: ModelRef}`      | `false`      | reference of the 3d model for accessing it's properties |
-| `scale`                    | `number`                   | `false`      | scale of the 3d model, defaults to 1 |
-| `positionX`                | `number`                   | `false`      | x coordinate in the world of the 3d model |
-| `positionY`                | `number`                   | `false`      | y coordinate in the world of the 3d model |
-| `rotationX`                | `number`                   | `false`      | rotation in x axis of the model |
-| `rotationY`                | `number`                   | `false`      | rotation in y axis of the model |
-| `rotationY`                | `number`                   | `false`      | rotation in z axis of the model |
-| `color`                    | `CSSProperties['color']`   | `false`      | color of the 3d model, defaults to "grey" |
+| Prop            |                      Type                      | Required |                          Notes                          |
+|-----------------|:----------------------------------------------:|:--------:|:-------------------------------------------------------:|
+| `ref`           |             `{current: ModelRef}`              | `false`  | reference of the 3d model for accessing it's properties |
+| `scale`         |                    `number`                    | `false`  |          scale of the 3d model, defaults to 1           |
+| `positionX`     |                    `number`                    | `false`  |        x coordinate in the world of the 3d model        |
+| `positionY`     |                    `number`                    | `false`  |        y coordinate in the world of the 3d model        |
+| `rotationX`     |                    `number`                    | `false`  |             rotation in x axis of the model             |
+| `rotationY`     |                    `number`                    | `false`  |             rotation in y axis of the model             |
+| `rotationY`     |                    `number`                    | `false`  |             rotation in z axis of the model             |
+| `color`         |            `CSSProperties['color']`            | `false`  |        color of the 3d model, defaults to "grey"        |
+| `geometryProps` | `(geometry: BufferGeometry) => BufferGeometry` | `false`  |     Perform some processing to the models geometry      | 
 
 ### FloorProps
 | Prop                       | Type                       | Required     | Notes                                                                                                                                                                                       |
