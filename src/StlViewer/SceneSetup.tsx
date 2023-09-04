@@ -1,7 +1,7 @@
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
 import { STLLoader } from 'three-stdlib/loaders/STLLoader'
-import { Box3, Color, Group, Mesh } from 'three'
+import { Box3, BufferGeometry, Color, Group, Mesh } from 'three'
 import { STLExporter } from './exporters/STLExporter'
 import Model3D, { ModelDimensions } from './SceneElements/Model3D'
 import Floor from './SceneElements/Floor'
@@ -35,6 +35,7 @@ export interface ModelProps {
   rotationY?: number
   rotationZ?: number
   color?: CSSProperties['color']
+  geometryProcessor?: (geometry: BufferGeometry) => BufferGeometry
 }
 
 export interface SceneSetupProps {
@@ -64,7 +65,8 @@ const SceneSetup: React.FC<SceneSetupProps> = (
       rotationX = 0,
       rotationY = 0,
       rotationZ = 0,
-      color = 'grey'
+      color = 'grey',
+      geometryProcessor
     } = {},
     floorProps: {
       gridWidth,
@@ -93,6 +95,11 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     STLLoader,
     url,
     (loader) => loader.setRequestHeader(extraHeaders ?? {})
+  )
+
+  const processedGeometry = useMemo(
+    () => geometryProcessor?.(geometry) ?? geometry,
+    [geometry, geometryProcessor]
   )
 
   function onLoaded (dims: ModelDimensions, mesh: Mesh): void {
@@ -150,7 +157,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
                 name={'group'}
                 meshProps={{ name: 'mesh' }}
                 scale={scale}
-                geometry={geometry}
+                geometry={processedGeometry}
                 position={modelPosition}
                 rotation={[rotationX, rotationY, rotationZ]}
                 visible={sceneReady}

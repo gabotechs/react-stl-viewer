@@ -46,7 +46,8 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                     rotationZ,
                     scale: 1,
                     color: "#008675",
-                    ref
+                    ref,
+                    geometryProcessor: geometry => geometry
                 }}
                 floorProps={{
                     gridWidth: 300
