@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
 import { useFrame, useLoader } from '@react-three/fiber'
-import { STLLoader } from 'three-stdlib'
+import { STLLoader } from 'three-stdlib/loaders/STLLoader'
 import { Box3, BufferGeometry, Color, Group, Mesh } from 'three'
 import { STLExporter } from './exporters/STLExporter'
 import Model3D, { ModelDimensions } from './SceneElements/Model3D'
