@@ -24,6 +24,7 @@ const StlViewer: React.FC<StlViewerProps> = (
     shadows,
     showAxes,
     orbitControls,
+    cameraInitialPosition,
     ...otherProps
   }
 ) => {
@@ -35,7 +36,8 @@ const StlViewer: React.FC<StlViewerProps> = (
     onFinishLoading,
     shadows,
     showAxes,
-    orbitControls
+    orbitControls,
+    cameraInitialPosition
   }
 
   return (

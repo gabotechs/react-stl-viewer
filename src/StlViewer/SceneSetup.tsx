@@ -40,6 +40,7 @@ export interface ModelProps {
 
 export interface SceneSetupProps {
   url: string
+  cameraInitialPosition?: Partial<CameraInitialPosition>
   extraHeaders?: Record<string, string>
   shadows?: boolean
   showAxes?: boolean
@@ -57,6 +58,11 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     showAxes = false,
     orbitControls = false,
     onFinishLoading = () => {},
+    cameraInitialPosition: {
+      latitude = INITIAL_LATITUDE,
+      longitude = INITIAL_LONGITUDE,
+      distance: distanceFactor
+    } = {},
     modelProps: {
       ref,
       scale = 1,
@@ -108,12 +114,15 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     setMeshDims(dims)
     setModelCenter([positionX ?? width/2, positionY ?? length/2, height/2])
     const maxGridDimension = Math.max(gridWidth ?? 0, gridLength ?? 0)
-    const distance = maxGridDimension > 0
-      ? maxGridDimension
-      : boundingRadius * CAMERA_POSITION_DISTANCE_FACTOR
+    let distance
+    if (maxGridDimension > 0) {
+      distance = maxGridDimension * (distanceFactor ?? 1)
+    } else {
+      distance = boundingRadius * (distanceFactor ?? CAMERA_POSITION_DISTANCE_FACTOR)
+    }
     setCameraInitialPosition({
-      latitude: INITIAL_LATITUDE,
-      longitude: INITIAL_LONGITUDE,
+      latitude,
+      longitude,
       distance
     })
     onFinishLoading(dims)
