@@ -38,6 +38,11 @@ function FromUrl(props: Omit<StlViewerProps, "url">) {
                 shadows
                 showAxes
                 orbitControls
+                cameraInitialPosition={{
+                  latitude: Math.PI / 8,
+                  longitude: -Math.PI / 8,
+                  distance: 1
+                }}
                 modelProps={{
                     positionX: 150,
                     positionY: 150,
