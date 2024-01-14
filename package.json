@@ -34,7 +34,7 @@
     "rollup-plugin-polyfill-node": "^0.11.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
-    "three": "^0.157.0",
+    "three": "^0.160.0",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.3"
   },

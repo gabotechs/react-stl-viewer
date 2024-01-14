@@ -49,8 +49,7 @@ const StlViewer: React.FC<StlViewerProps> = (
                         gl={{
                           preserveDrawingBuffer: true,
                           shadowMapType: PCFSoftShadowMap,
-                          antialias: true,
-                          useLegacyLights: true
+                          antialias: true
                         }}
                         id={canvasId}
                         style={{ width: '100%', height: '100%' }}

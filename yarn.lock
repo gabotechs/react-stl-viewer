@@ -13921,7 +13921,7 @@ __metadata:
     rollup-plugin-polyfill-node: ^0.11.0
     rollup-plugin-postcss: ^4.0.2
     rollup-plugin-typescript2: ^0.34.1
-    three: ^0.157.0
+    three: ^0.160.0
     three-stdlib: 2.17.2
     ts-jest: ^28.0.5
     typescript: ^4.7.3
@@ -15823,10 +15823,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three@npm:^0.157.0":
-  version: 0.157.0
-  resolution: "three@npm:0.157.0"
-  checksum: 444797461c9db09d8a4cad886e494c2e6dd5754f09ac7ac4af75a3bf1143ae79641388db31999edcc76c5dba9677639f09da2df8d0128396a1dd59e41226c85c
+"three@npm:^0.160.0":
+  version: 0.160.0
+  resolution: "three@npm:0.160.0"
+  checksum: ae9aadbcdfcbf2afdfeebc376abacd980c4cbcd0177dbe56e1420305bcc3dea9115b865932937b74445d937f463623a496e9784c39e238b32f982d6a22c6311d
   languageName: node
   linkType: hard
 
