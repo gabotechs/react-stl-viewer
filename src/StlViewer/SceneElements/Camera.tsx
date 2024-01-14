@@ -2,14 +2,17 @@ import React, { useEffect } from 'react'
 import { PerspectiveCameraProps, useThree } from '@react-three/fiber'
 import { Vector3 } from 'three'
 
-export interface CameraInitialPosition {
+export interface CameraPosition {
   latitude: number
   longitude: number
   distance: number
 }
 
+/** @deprecated use {@link CameraPosition} instead */
+export type CameraInitialPosition = CameraPosition
+
 export interface CameraProps extends Partial<PerspectiveCameraProps> {
-  initialPosition: CameraInitialPosition
+  initialPosition: CameraPosition
   center: [number, number, number]
 }
 
@@ -19,7 +22,7 @@ function clamp (min: number, value: number, max: number): number {
 
 const EPS = 0.01
 
-function polarToCartesian (polar: CameraInitialPosition): [number, number, number] {
+export function polarToCartesian (polar: CameraPosition): [number, number, number] {
   const latitude = clamp(-Math.PI / 2 + EPS, polar.latitude, Math.PI / 2 - EPS)
   const longitude = clamp(-Math.PI + EPS, polar.longitude, Math.PI - EPS)
   return [

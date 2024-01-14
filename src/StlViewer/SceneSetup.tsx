@@ -1,12 +1,12 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
-import { useFrame, useLoader } from '@react-three/fiber'
+import { useFrame, useLoader, useThree } from '@react-three/fiber'
 import { STLLoader } from 'three-stdlib/loaders/STLLoader'
 import { Box3, BufferGeometry, Color, Group, Mesh } from 'three'
 import { STLExporter } from './exporters/STLExporter'
 import Model3D, { ModelDimensions } from './SceneElements/Model3D'
 import Floor from './SceneElements/Floor'
 import Lights from './SceneElements/Lights'
-import Camera, { CameraInitialPosition } from './SceneElements/Camera'
+import Camera, { CameraPosition, polarToCartesian } from './SceneElements/Camera'
 import OrbitControls from './SceneElements/OrbitControls'
 
 const INITIAL_LATITUDE = Math.PI / 8
@@ -19,6 +19,15 @@ const BACKGROUND = new Color('white')
 export interface FloorProps {
   gridWidth?: number
   gridLength?: number
+}
+
+export interface CameraRef {
+  setCameraPosition: (position: CameraPosition) => any
+}
+
+export interface CameraProps {
+  ref?: { current?: null | CameraRef }
+  initialPosition?: CameraPosition
 }
 
 export interface ModelRef {
@@ -40,12 +49,14 @@ export interface ModelProps {
 
 export interface SceneSetupProps {
   url: string
-  cameraInitialPosition?: Partial<CameraInitialPosition>
+  /** @deprecated use cameraProps.initialPosition instead */
+  cameraInitialPosition?: Partial<CameraPosition>
   extraHeaders?: Record<string, string>
   shadows?: boolean
   showAxes?: boolean
   orbitControls?: boolean
   onFinishLoading?: (ev: ModelDimensions) => any
+  cameraProps?: CameraProps
   modelProps?: ModelProps
   floorProps?: FloorProps
 }
@@ -59,12 +70,20 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     orbitControls = false,
     onFinishLoading = () => {},
     cameraInitialPosition: {
-      latitude = INITIAL_LATITUDE,
-      longitude = INITIAL_LONGITUDE,
-      distance: distanceFactor
+      latitude: deprecatedLatitude,
+      longitude: deprecatedLongitude,
+      distance: deprecatedDistanceFactor
+    } = {},
+    cameraProps: {
+      ref: cameraRef,
+      initialPosition: {
+        latitude = INITIAL_LATITUDE,
+        longitude = INITIAL_LONGITUDE,
+        distance: distanceFactor = undefined
+      } = {}
     } = {},
     modelProps: {
-      ref,
+      ref: modelRef,
       scale = 1,
       positionX,
       positionY,
@@ -80,6 +99,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     } = {}
   }
 ) => {
+  const { camera } = useThree()
   const [mesh, setMesh] = useState<Mesh>()
 
   const [meshDims, setMeshDims] = useState<ModelDimensions>({
@@ -89,7 +109,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     boundingRadius: 0
   })
 
-  const [cameraInitialPosition, setCameraInitialPosition] = useState<CameraInitialPosition>()
+  const [cameraInitialPosition, setCameraInitialPosition] = useState<CameraPosition>()
 
   const [modelCenter, setModelCenter] = useState<[number, number, number]>([0, 0, 0])
   const [sceneReady, setSceneReady] = useState(false)
@@ -108,37 +128,52 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     [geometry, geometryProcessor]
   )
 
+  function calculateCameraDistance (boundingRadius: number, factor?: number): number {
+    const maxGridDimension = Math.max(gridWidth ?? 0, gridLength ?? 0)
+    if (maxGridDimension > 0) {
+      return maxGridDimension * (factor ?? 1)
+    } else {
+      return boundingRadius * (factor ?? CAMERA_POSITION_DISTANCE_FACTOR)
+    }
+  }
+
   function onLoaded (dims: ModelDimensions, mesh: Mesh): void {
     setMesh(mesh)
     const { width, length, height, boundingRadius } = dims
     setMeshDims(dims)
     setModelCenter([positionX ?? width/2, positionY ?? length/2, height/2])
-    const maxGridDimension = Math.max(gridWidth ?? 0, gridLength ?? 0)
-    let distance
-    if (maxGridDimension > 0) {
-      distance = maxGridDimension * (distanceFactor ?? 1)
-    } else {
-      distance = boundingRadius * (distanceFactor ?? CAMERA_POSITION_DISTANCE_FACTOR)
-    }
     setCameraInitialPosition({
-      latitude,
-      longitude,
-      distance
+      latitude: deprecatedLatitude ?? latitude,
+      longitude: deprecatedLongitude ?? longitude,
+      distance: calculateCameraDistance(boundingRadius, deprecatedDistanceFactor ?? distanceFactor)
     })
     onFinishLoading(dims)
     setTimeout(() => setSceneReady(true), 100) // let the three.js render loop place things
   }
 
   useEffect(() => {
-    if ((ref == null) || (mesh == null)) return
-    ref.current = {
+    if (cameraRef == null) return
+    cameraRef.current = {
+      setCameraPosition: ({ latitude, longitude, distance: factor }) => {
+        const distance = calculateCameraDistance(meshDims.boundingRadius, factor)
+        const [x, y, z] = polarToCartesian({ latitude, longitude, distance })
+        const [cx, cy, cz] = modelCenter
+        camera.position.set(x + cx, y + cy, z + cz)
+        camera.lookAt(cx, cy, cz)
+      }
+    }
+  }, [camera, cameraRef, modelCenter, meshDims])
+
+  useEffect(() => {
+    if ((modelRef == null) || (mesh == null)) return
+    modelRef.current = {
       save: () => new Blob(
         [new STLExporter().parse(mesh, { binary: true })],
         { type: 'application/octet-stream' }
       ),
       model: mesh
     }
-  }, [mesh, ref])
+  }, [mesh, modelRef])
 
   useFrame(({ scene }) => {
     const mesh = scene.getObjectByName('mesh') as Mesh
