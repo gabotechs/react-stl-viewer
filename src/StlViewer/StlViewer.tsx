@@ -14,6 +14,7 @@ export interface StlViewerProps extends DivProps, SceneSetupProps {
 const StlViewer: React.FC<StlViewerProps> = (
   {
     url,
+    cameraProps,
     modelProps,
     floorProps,
     children,
@@ -30,6 +31,7 @@ const StlViewer: React.FC<StlViewerProps> = (
 ) => {
   const sceneProps: SceneSetupProps = {
     url,
+    cameraProps,
     modelProps,
     floorProps,
     extraHeaders,
