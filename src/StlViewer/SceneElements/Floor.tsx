@@ -1,7 +1,9 @@
 import React from 'react'
-import { GroupProps } from '@react-three/fiber'
+import '@react-three/fiber'
 
 const BIG_NUM = 2**16
+
+type GroupProps = React.ComponentProps<'group'>
 
 export interface FloorProps extends GroupProps {
   visible?: boolean

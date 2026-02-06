@@ -1,6 +1,7 @@
 import React from 'react'
 
-interface IProps extends React.PropsWithChildren {
+interface IProps {
+  children?: React.ReactNode
   onError?: (err: Error) => void
 }
 
@@ -11,18 +12,15 @@ interface IState {
 class ErrorBoundary extends React.Component<IProps, IState> {
   state = { message: '' }
 
-  shouldComponentUpdate (nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any): boolean {
-    if ((this.state.message === '') && (nextState.message !== '') && (nextProps.onError != null)) {
-      nextProps.onError(new Error(nextState.message))
-    }
-    return true
-  }
-
   static getDerivedStateFromError (error: Error): IState {
     return { message: error.message }
   }
 
-  componentDidCatch (): void {}
+  componentDidCatch (error: Error): void {
+    if (this.props.onError != null) {
+      this.props.onError(error)
+    }
+  }
 
   render (): React.ReactNode {
     if (this.state.message !== '') return null
