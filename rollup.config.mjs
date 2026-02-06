@@ -21,6 +21,18 @@ export default [
                 format: "esm",
             },
         ],
+        external: (id) => {
+            return (
+                id === 'react' ||
+                id === 'react-dom' ||
+                id === 'three' ||
+                id.startsWith('react/') ||
+                id.startsWith('react-dom/') ||
+                id.startsWith('@react-three/fiber') ||
+                id.startsWith('three/') ||
+                id.startsWith('three-stdlib/')
+            );
+        },
         plugins: [
             peerDepsExternal(),
             commonjs(),

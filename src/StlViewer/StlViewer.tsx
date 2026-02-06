@@ -9,6 +9,7 @@ type DivProps = Omit<HTMLProps<HTMLDivElement>, 'color' | 'onError'>
 export interface StlViewerProps extends DivProps, SceneSetupProps {
   onError?: (err: Error) => void
   canvasId?: string
+  children?: React.ReactNode
 }
 
 const StlViewer: React.FC<StlViewerProps> = (

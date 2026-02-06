@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
-import { useFrame, useLoader, useThree } from '@react-three/fiber'
-import { STLLoader } from 'three-stdlib/loaders/STLLoader'
+import { useFrame, useThree } from '@react-three/fiber'
+import { STLLoader } from 'three-stdlib'
 import { Box3, BufferGeometry, Color, Group, Mesh } from 'three'
 import { STLExporter } from './exporters/STLExporter'
 import Model3D, { ModelDimensions } from './SceneElements/Model3D'
@@ -59,6 +59,7 @@ export interface SceneSetupProps {
   cameraProps?: CameraProps
   modelProps?: ModelProps
   floorProps?: FloorProps
+  children?: React.ReactNode
 }
 
 const SceneSetup: React.FC<SceneSetupProps> = (
@@ -113,18 +114,38 @@ const SceneSetup: React.FC<SceneSetupProps> = (
 
   const [modelCenter, setModelCenter] = useState<[number, number, number]>([0, 0, 0])
   const [sceneReady, setSceneReady] = useState(false)
+  const [geometry, setGeometry] = useState<BufferGeometry | null>(null)
+  const [loadError, setLoadError] = useState<Error | null>(null)
+
+  // Manual loading to avoid React 19 Suspense issues with useLoader
   useEffect(() => {
     setSceneReady(false)
-  }, [url])
+    setGeometry(null)
+    setLoadError(null)
 
-  const geometry = useLoader(
-    STLLoader,
-    url,
-    (loader) => loader.setRequestHeader(extraHeaders ?? {})
-  )
+    const loader = new STLLoader()
+    
+    // Set extra headers if provided
+    if (extraHeaders) {
+      loader.setRequestHeader(extraHeaders)
+    }
+
+    loader.load(
+      url,
+      (loadedGeometry) => {
+        setGeometry(loadedGeometry)
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading STL:', error)
+        const err = error instanceof Error ? error : new Error(String(error))
+        setLoadError(err)
+      }
+    )
+  }, [url, extraHeaders])
 
   const processedGeometry = useMemo(
-    () => geometryProcessor?.(geometry) ?? geometry,
+    () => geometry && geometryProcessor ? geometryProcessor(geometry) : geometry,
     [geometry, geometryProcessor]
   )
 
@@ -178,6 +199,7 @@ const SceneSetup: React.FC<SceneSetupProps> = (
   useFrame(({ scene }) => {
     const mesh = scene.getObjectByName('mesh') as Mesh
     const group = scene.getObjectByName('group') as Group
+    if (!mesh || !group) return
     const bbox = new Box3().setFromObject(mesh)
     const height = bbox.max.z-bbox.min.z
     group.position.z = height/2
@@ -188,6 +210,15 @@ const SceneSetup: React.FC<SceneSetupProps> = (
     positionY ?? (meshDims.length*scale)/2,
     0
   ]
+
+  if (loadError) {
+    console.error('Failed to load STL model:', loadError)
+    return null
+  }
+
+  if (!processedGeometry) {
+    return null // Still loading
+  }
 
   return (
         <>
