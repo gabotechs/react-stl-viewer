@@ -1,9 +1,10 @@
-import { EventManager, PrimitiveProps, useFrame, useThree } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
+import { type EventManager, useFrame, useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import * as React from 'react'
 import { OrbitControls as StdOrbitControls } from 'three-stdlib/controls/OrbitControls'
 
-export interface OrbitControlsProps extends Omit<PrimitiveProps, 'object'> {}
+export interface OrbitControlsProps extends Omit<ThreeElements['primitive'], 'object'> {}
 
 const OrbitControls: React.FC<OrbitControlsProps> = (props) => {
   const camera = useThree((state) => state.camera)

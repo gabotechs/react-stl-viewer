@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { PerspectiveCameraProps, useThree } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
 import { Vector3 } from 'three'
 
 export interface CameraPosition {
@@ -11,7 +12,7 @@ export interface CameraPosition {
 /** @deprecated use {@link CameraPosition} instead */
 export type CameraInitialPosition = CameraPosition
 
-export interface CameraProps extends Partial<PerspectiveCameraProps> {
+export interface CameraProps extends Partial<ThreeElements['perspectiveCamera']> {
   initialPosition: CameraPosition
   center: [number, number, number]
 }
