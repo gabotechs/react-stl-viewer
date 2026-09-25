@@ -1,7 +1,7 @@
 import { EventManager, PrimitiveProps, useFrame, useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
 import * as React from 'react'
-import { OrbitControls as StdOrbitControls } from 'three-stdlib/controls/OrbitControls'
+import { OrbitControls as StdOrbitControls } from 'three-stdlib'
 
 export interface OrbitControlsProps extends Omit<PrimitiveProps, 'object'> {}
 
